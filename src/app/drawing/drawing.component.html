@@ -1,0 +1,8 @@
+<p>drawing works!</p>
+
+<canvas tabindex=1 #canv focus (keydown)="animateDirection($event.keyCode)"></canvas>
+<button (click)="animate()" (keypress)="animate()" (focus)="log()">play</button>
+
+<br />
+<button (click)="start()">start</button>
+<button (click)="stop()">stop</button>
