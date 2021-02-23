@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
 import { Square } from './square';
 import { Canvas } from '../canvas';
 import { Direction, GameKey } from '../enums';
@@ -7,6 +9,7 @@ import { Grid } from '../grid';
 import { Snake } from '../snake';
 import { Direct } from 'protractor/built/driverProviders';
 import { Food } from '../food';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -22,8 +25,9 @@ export class DrawingComponent implements OnInit {
   canvas!: Canvas;
   grid!: Grid;
 
-  private snake!: Snake;
+  public  snake!: Snake;
   private food!: Food;
+
   
   //private ctx!: CanvasRenderingContext2D;
 
@@ -35,11 +39,16 @@ export class DrawingComponent implements OnInit {
     if (!c || !(c instanceof CanvasRenderingContext2D)) throw new Error('canvas context error');
     this.ctx = c;
     */
-   this.canvas = new Canvas(this.canv.nativeElement);
-   this.grid = new Grid(this.canv.nativeElement);
+   this.setup();
+  }
 
-   this.snake = new Snake(this.grid, new Position(0,0));
-   this.food = new Food(this.grid, 10);
+  setup() : void {
+    this.canvas = new Canvas(this.canv.nativeElement);
+    this.grid = new Grid(this.canv.nativeElement);
+ 
+    this.food = new Food(this.grid, 10);
+    this.snake = new Snake(this.grid, new Position(0,0, 'black'), this.food, this);
+ 
   }
 
 
@@ -88,19 +97,41 @@ export class DrawingComponent implements OnInit {
     
   }
 
-  private running: boolean = false;
+  public running: boolean = false;
+  public pause: boolean = false;
+  public isGameover: boolean = false;
 
   start(): void {
     this.canv.nativeElement.focus();
 
     if (this.running) return;
+
+    if (!this.pause) this.setup();
     this.snake.start();
     this.running = true;
+    this.isGameover=false;
+
+
   }
+
 
   stop(): void {
     this.running = false;
+    this.pause = true;
     this.snake.stop();
+  }
+
+  restart(): void {
+    this.running = false;
+    this.pause = false;
+    this.start();
+
+  }
+
+  public gameover(): void {
+    this.running = false;
+    this.pause = false;
+    this.isGameover = true;
   }
 
   /*

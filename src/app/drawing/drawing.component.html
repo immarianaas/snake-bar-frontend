@@ -1,4 +1,8 @@
-<p>drawing works!</p>
+<h2 *ngIf="this.pause">stopped</h2>
+<h2 *ngIf="this.running">playing</h2>
+<h2 *ngIf="this.isGameover">game over c':</h2>
+
+<h2 *ngIf="!this.pause&&!this.running&&!this.isGameover">press start to begin!</h2>
 
 <canvas tabindex=1 #canv focus (keydown)="animateDirection($event.keyCode)"></canvas>
 <button (click)="animate()" (keypress)="animate()" (focus)="log()">play</button>
@@ -6,3 +10,16 @@
 <br />
 <button (click)="start()">start</button>
 <button (click)="stop()">stop</button>
+
+<br />
+<label>Food eaten: </label>
+<input type="number" [(ngModel)]="this.snake.foodeaten" />
+
+<br />
+<label>Total length: </label>
+<input type="number" [(ngModel)]="this.snake.maxlen" />
+
+<!--
+
+    [(ngModel)]="this.snake.foodeten"
+-->

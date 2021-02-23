@@ -3,11 +3,12 @@ import { NUM_X, NUM_Y } from "./constants";
 export class Position {
     X: number = 0;
     Y: number = 0;
+    colour?: string;
 
-
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, c?: string) {
         this.setX(x);
         this.setY(y);
+        this.colour = c;
     }
 
     public setX(x: number) {
@@ -18,6 +19,10 @@ export class Position {
     public setY(y: number) {
         this.Y = y % NUM_Y;
         if (this.Y<0) this.Y = NUM_Y + this.Y;
+    }
+
+    public setColour(c: string) {
+        this.colour = c;
     }
     
     static copy(pos:Position) {

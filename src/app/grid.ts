@@ -28,11 +28,12 @@ export class Grid {
         this.context = ctx;
     }
 
-    fillSquare(p: Position, colour?: string) : void {
+    fillSquare(p: Position) : void {
+        // to remove the arg 'colour'
         this.occupied.add(p);
 
-        if (!colour) colour = 'black';
-        
+        const colour = !p.colour ? 'black' : p.colour;
+        // if (!colour) colour = 'black';
         this.context.fillStyle = colour;
 
         this.context.fillRect(p.X*this.edgesize, p.Y*this.edgesize, this.edgesize, this.edgesize);
@@ -44,7 +45,7 @@ export class Grid {
     eraseSquare(p:Position) : void {
         this.occupied.delete(p);
         this.context.clearRect(p.X*this.edgesize, p.Y*this.edgesize, this.edgesize, this.edgesize);
-        console.log('grid eraseSquare() : ' + p);
+        console.log('grid eraseSquare() : ' + this.occupied);
     }
 
     private isFree(p: Position): boolean {
@@ -54,7 +55,7 @@ export class Grid {
     public addFood(p: Position): boolean {
         if (!this.isFree(p)) return false;
         
-        this.fillSquare(p, 'red');
+        this.fillSquare(p);
         return true;
     }
 
