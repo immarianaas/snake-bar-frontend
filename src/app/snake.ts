@@ -15,7 +15,6 @@ export class Snake {
     private dir: Direction;
     private grid: Grid;
     public len: number; // max len
-    private sid: any; // setIntervalId
 
     private tempdir: Direction;
 
@@ -138,14 +137,17 @@ export class Snake {
     }
 
     public checkIfGrow(removed_pos: Position) : boolean {
-        let food : Food | null = null;
+        var food : Food | undefined;
         this.digesting.forEach(f => {
             if (f.pos.equals(removed_pos)) food = f;
         });
-
         if (!food) return false;
-        this.digesting.push(food);
-        this.foodeaten++;
+
+        this.digesting = this.digesting.filter(foodelem => !removed_pos.equals(foodelem.pos));
+        this.pos.push(food.pos);
+        this.colours.push(food.colour);
+        this.grid.fillSquare(food.pos, food.colour);
+        this.len++;
         return true;
     }
     
