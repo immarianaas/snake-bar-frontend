@@ -1,19 +1,24 @@
+<!--
+<h2 *ngIf="this.pause">stopped</h2>
+<h2 *ngIf="this.running">playing</h2>
+<h2 *ngIf="this.isGameover">game over c':</h2>
+<h2 *ngIf="!this.pause&&!this.running&&!this.isGameover">press start to begin!</h2>
+--> 
 
-<body>
-<header>
-    <button id="reset">reset</button>
-    <button id="pause">pause</button>
-    <button id="start">start</button>
-    <span id="player-one-score"></span>
-    <span id="player-one-lives"></span>
-    <span id="player-two-score"></span>        
-    <span id="player-two-lives"></span>
-    <br>
-    <div>            
-        <span>[ SPACEBAR ] - warp jump</span>
-        <span id="build">&copy;2015-2019 <a href="https://twitter.com/8_bit_hacker">@8_bit_hacker</a></span>
-    </div>
-</header>
+<canvas tabindex=1 #canv focus (keydown)="changeDir($event.keyCode)"></canvas>
 
-<canvas></canvas>
-</body>
+<br />
+<button (click)="start()">start</button>
+<button (click)="pause()">stop</button>
+<button>reset</button>
+
+<!--
+<br />
+<label>Food eaten: </label>
+<input type="number" [(ngModel)]="this.snake.foodeaten" />
+
+<br />
+<label>Total length: </label>
+<input type="number" [(ngModel)]="this.snake.maxlen" />
+
+-->

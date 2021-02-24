@@ -46,25 +46,15 @@ export class DrawingComponent implements OnInit {
     this.canvas = new Canvas(this.canv.nativeElement);
     this.grid = new Grid(this.canv.nativeElement);
  
-    this.food = new Food(this.grid, 10);
-    this.snake = new Snake(this.grid, new Position(0,0, 'black'), this.food, this);
+    this.food = new Food(new Position(-1,-1), 'ds', 10);
+    this.snake = new Snake(this.grid, new Position(0,0), 'black');
  
   }
 
 
   i: number = 1
   animate(): void {
-    /*
-    this.ctx.fillStyle = 'red';
-    const square = new Square(this.ctx);
-    square.draw(1, 1, 20);
-    */
-   /*
-   this.canvas.draw_rect(this.i, 2, 20, 20, 'red');
-   this.canvas.fill_rect(this.i, 2, 20, 20, 'blue');
-   this.canvas.draw_rect(this.i, 2+20, 20, 20, 'red');
-   */
-
+ 
    this.i += 10;
    this.grid.fillSquare(new Position(this.i, this.i));
    
@@ -107,7 +97,7 @@ export class DrawingComponent implements OnInit {
     if (this.running) return;
 
     if (!this.pause) this.setup();
-    this.snake.start();
+    // this.snake.start();
     this.running = true;
     this.isGameover=false;
 
@@ -118,7 +108,7 @@ export class DrawingComponent implements OnInit {
   stop(): void {
     this.running = false;
     this.pause = true;
-    this.snake.stop();
+    // this.snake.stop();
   }
 
   restart(): void {

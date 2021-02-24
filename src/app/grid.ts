@@ -1,11 +1,12 @@
-import { runInThisContext } from "node:vm";
-import { HEIGHT, WIDTH } from "./constants";
+import { zip } from "rxjs";
+import { HEIGHT, WIDTH, EDGE_SIZE } from "./constants";
+import { Food } from "./food";
 import { Position } from "./position";
 
 export class Grid {
 
     private context!: CanvasRenderingContext2D;
-    private edgesize: number = 10;
+    private edgesize: number = EDGE_SIZE;
 
     private occupied : Set<Position>;
 
@@ -28,13 +29,13 @@ export class Grid {
         this.context = ctx;
     }
 
-    fillSquare(p: Position) : void {
+    fillSquare(p: Position, colour?: string) : void {
         // to remove the arg 'colour'
         this.occupied.add(p);
 
-        const colour = !p.colour ? 'black' : p.colour;
+        const col = colour ? colour : 'black';
         // if (!colour) colour = 'black';
-        this.context.fillStyle = colour;
+        this.context.fillStyle = col;
 
         this.context.fillRect(p.X*this.edgesize, p.Y*this.edgesize, this.edgesize, this.edgesize);
         
@@ -48,15 +49,26 @@ export class Grid {
         console.log('grid eraseSquare() : ' + this.occupied);
     }
 
-    private isFree(p: Position): boolean {
+    public isFree(p: Position): boolean {
+        // todo: check this plz for i dont know if it works
         return !this.occupied.has(p);
     }
 
-    public addFood(p: Position): boolean {
-        if (!this.isFree(p)) return false;
+    public printFood(f: Food): boolean {
+        // checked already tho...
+        if (!this.isFree(f.pos)) return false;
         
-        this.fillSquare(p);
+        this.fillSquare(f.pos, f.colour); 
+        // maybe change this so that food is a circle or smth..
+        
         return true;
+    }
+
+    public printSnake(pos: Position[], colours: string[], pos_to_remove?: Position) : void {
+        pos.forEach( (p, i) => {
+            this.fillSquare(p, colours[i]);
+        });
+        if (pos_to_remove) this.eraseSquare(pos_to_remove);
     }
 
 

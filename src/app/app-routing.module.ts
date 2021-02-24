@@ -4,8 +4,8 @@ import { DrawingComponent } from './drawing/drawing.component';
 import { GameComponent } from './game/game.component';
 
 const routes: Routes = [
-  { path: 'game', component: GameComponent },
-  { path: '', component: DrawingComponent }
+  { path: '', component: GameComponent },
+  { path: 'draw', component: DrawingComponent }
 ];
 
 @NgModule({
