@@ -12,17 +12,16 @@
 <canvas tabindex=1 #canv focus (keydown)="changeDir($event.keyCode)"></canvas>
 
 <br />
-<button (click)="start()">start</button>
-<button (click)="pause()">stop</button>
-<button (click)="reset()">reset</button>
+<button [disabled]="this.game.started && !this.game.paused" (click)="start()">start</button>
+<button [disabled]="!this.game.started || this.game.paused" (click)="pause()">stop</button>
+<button [disabled]="!this.game.started" (click)="reset()">reset</button>
 
-<!--
-<br />
-<label>Food eaten: </label>
-<input type="number" [(ngModel)]="this.snake.foodeaten" />
+<div *ngIf="this.game.started">
+    <br />
+    <label>Food eaten: </label>
+    <input type="number" [ngModel]="this.game.getFoodEaten()" />
 
-<br />
-<label>Total length: </label>
-<input type="number" [(ngModel)]="this.snake.maxlen" />
-
--->
+    <br />
+    <label>Total length: </label>
+    <input type="number" [ngModel]="this.game.getLength()" />
+</div>

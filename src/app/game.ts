@@ -79,6 +79,13 @@ export class Game {
         this.pause();
     }
 
+    public getFoodEaten() : number {
+        return this.snake.foodeaten;
+    }
+    public getLength() : number {
+        return this.snake.len;
+    }
+
 
 
 }
