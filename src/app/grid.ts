@@ -71,5 +71,9 @@ export class Grid {
         if (pos_to_remove) this.eraseSquare(pos_to_remove);
     }
 
+    public cleanEverything() {
+        this.context.clearRect(0,0,WIDTH,HEIGHT);
+    }
+
 
 }

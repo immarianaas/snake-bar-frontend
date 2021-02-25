@@ -13,7 +13,9 @@ export class Game {
 
     private sid: any;
 
-    private started: boolean;
+    public started: boolean;
+    public gameover: boolean = false;
+    public paused: boolean = false;
 
     constructor(el: HTMLCanvasElement) {
         this.grid = new Grid(el);
@@ -34,6 +36,8 @@ export class Game {
         if (!rempos) return;
         const gameover = this.snake.checkIfGameOver();
         if (gameover) { // do smth
+            this.gameover = true;
+            this.started = false;
             this.pause();
         }
 
@@ -44,17 +48,35 @@ export class Game {
     }
 
     public start() {
+        if (this.gameover) {
+            this.reset();
+            this.gameover = false;
+        }
         if (!this.started) {
             this.foodbowl.fillBowl();
-        this.started = true;
-
+            this.started = true;
         }
+        this.paused = false;
         this.sid = setInterval(() => { this.move_snake()}, 200);
     }
 
     public pause() {
         if (!this.sid) return;
         clearInterval(this.sid);
+        if (!this.started) this.paused = false;
+        else this.paused = true;
+    }
+
+    public reset() {
+
+        this.grid.cleanEverything();
+        this.started = false;
+        this.snake = new Snake(this.grid, new Position(0,0), 'black');
+        // ^ change this to allow more than one..
+
+        this.foodbowl = new FoodBowl(this.grid);
+        this.started=false;
+        this.pause();
     }
 
 

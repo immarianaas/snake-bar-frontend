@@ -25,6 +25,11 @@ export class GameComponent implements OnInit {
     this.game.start();
   }
 
+  public reset() : void {
+    this.game.reset();
+  }
+
+
   public pause() : void {
     this.game.pause();
   }

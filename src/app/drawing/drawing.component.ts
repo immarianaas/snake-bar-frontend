@@ -101,6 +101,8 @@ export class DrawingComponent implements OnInit {
     this.running = true;
     this.isGameover=false;
 
+    this.write();
+
 
   }
 
@@ -124,32 +126,15 @@ export class DrawingComponent implements OnInit {
     this.isGameover = true;
   }
 
-  /*
-  animateDirection(e: number): void {
-    // i can compare the values with the enum!!! 
-    switch (e) {
-      case GameKey.DOWN:
-        this.pos.Y+=this.step; break;
-
-      case GameKey.UP:
-        this.pos.Y-=this.step; break;
-
-      case GameKey.LEFT:
-        this.pos.X-=this.step; break;
-
-      case GameKey.RIGHT:
-        this.pos.X+=this.step; break;
-      
-      default:
-        console.log("invalid key");
-
+  public write() : void {
+    const ctx = this.canv.nativeElement.getContext("2d");
+    if (!ctx || !(ctx instanceof CanvasRenderingContext2D)) {
+        throw new Error('Error getting 2D context!!');
     }
-    this.drawSmth(this.pos, 'red');
-
-    console.log(e + " key == up? " + (e == GameKey.UP) + " - " + GameKey[e]);
+    ctx.font = '60px serif';
+    ctx.strokeText('Game Over', 10, 50);
+    
   }
-  */
-
   log(): void { console.log('help'); }
 }
 
