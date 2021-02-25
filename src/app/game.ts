@@ -18,7 +18,7 @@ export class Game {
     constructor(el: HTMLCanvasElement) {
         this.grid = new Grid(el);
         this.snake = new Snake(this.grid, new Position(0,0), 'black');
-        // ^ change this to permit more than one..
+        // ^ change this to allow more than one..
 
         this.foodbowl = new FoodBowl(this.grid);
         this.started = false;
@@ -34,6 +34,7 @@ export class Game {
         if (!rempos) return;
         const gameover = this.snake.checkIfGameOver();
         if (gameover) { // do smth
+            this.pause();
         }
 
         const ate : boolean = this.snake.checkIfAte(this.foodbowl);
@@ -45,6 +46,8 @@ export class Game {
     public start() {
         if (!this.started) {
             this.foodbowl.fillBowl();
+        this.started = true;
+
         }
         this.sid = setInterval(() => { this.move_snake()}, 200);
     }
@@ -53,6 +56,7 @@ export class Game {
         if (!this.sid) return;
         clearInterval(this.sid);
     }
+
 
 
 }

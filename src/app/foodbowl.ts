@@ -17,7 +17,9 @@ export class FoodBowl {
 
     public fillBowl(max?: number) {
         const maxquantity = max && max >= 0 ? max : this.nfood;
-        while (this.foodset.length <= maxquantity) {
+        console.error(this.foodset.length);
+        console.error(maxquantity);
+        while (this.foodset.length < maxquantity) {
             const newfoodp : Position = this.getRandomPos();
             if (this.grid.isFree(newfoodp)) {
                 const f : Food = this.genRandomFood(newfoodp);
@@ -33,7 +35,10 @@ export class FoodBowl {
             if (pos.equals(food.pos)) f = food;
         });
         if (!f) return null;
-        this.foodset = this.foodset.filter( felem => f?.pos.equals(felem.pos) );
+        console.error("before foodset len: " + JSON.stringify(this.foodset));
+        this.foodset = this.foodset.filter( felem => !f?.pos.equals(felem.pos) );
+        console.error("after foodset len: " + this.foodset);
+
         return f;
     }
 
