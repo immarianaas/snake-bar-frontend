@@ -1,3 +1,5 @@
+<!--
+
 <h2 *ngIf="this.pause">stopped</h2>
 <h2 *ngIf="this.running">playing</h2>
 <h2 *ngIf="this.isGameover">game over c':</h2>
@@ -19,7 +21,17 @@
 <label>Total length: </label>
 <input type="number" [(ngModel)]="this.snake.len" />
 
-<!--
 
     [(ngModel)]="this.snake.foodeten"
 -->
+
+
+<h1> websockets part </h1>
+
+<tr *ngFor="let m of msgs"> 
+    <td>{{ m.sender }} said: {{ m.message }}</td>
+</tr>
+
+<br>
+send: <input [(ngModel)]="this.msg.message" type="text">
+<br><input type="button" value="send!" (click)="sendMsg()" >

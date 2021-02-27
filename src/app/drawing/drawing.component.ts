@@ -9,13 +9,17 @@ import { Grid } from '../grid';
 import { Snake } from '../snake';
 import { Direct } from 'protractor/built/driverProviders';
 import { Food } from '../food';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { webSocket } from 'rxjs/webSocket';
+import { ChatService, Message } from '../chat.service';
+import { WebsocketService } from '../websocket.service';
 
 
 @Component({
   selector: 'app-drawing',
   templateUrl: './drawing.component.html',
-  styleUrls: ['./drawing.component.css']
+  styleUrls: ['./drawing.component.css'],
+  providers: [WebsocketService, ChatService]
 })
 export class DrawingComponent implements OnInit {
 
@@ -31,8 +35,33 @@ export class DrawingComponent implements OnInit {
   
   //private ctx!: CanvasRenderingContext2D;
 
-  constructor() {}
   
+  constructor(private chatService: ChatService) {
+    chatService.messages.subscribe(msg => {
+      console.log("resp from websocket: " + JSON.stringify(msg));
+      // const mensg = msg.message;
+      // this.msgs.push(<Message> {sender: mensg.sender, message: mensg.});
+      console.log(msg.message);
+      this.msgs.push(<Message> <unknown>msg.message);
+
+    })
+  }
+
+  public msgs : Message[] = [];
+  public msg = {
+    // type: "chat_message",
+    sender: "mar",
+    message: "write smth"
+  }
+
+  sendMsg() : void {
+    this.chatService.messages.next(this.msg);
+  }
+
+  
+
+
+  /* **************************** */
   ngOnInit(): void {
     /*
     const c = this.canv.nativeElement.getContext('2d');
@@ -136,6 +165,11 @@ export class DrawingComponent implements OnInit {
     
   }
   log(): void { console.log('help'); }
+
+
+
+
+
 }
 
 
