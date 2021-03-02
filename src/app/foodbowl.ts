@@ -15,6 +15,14 @@ export class FoodBowl {
         this.foodset = [];
     }
 
+    public addFood(food_set : number[][]) {
+        food_set.forEach(elem => {
+            const f : Food = new Food(new Position(elem[0], elem[1]), 'red', 1);
+            this.foodset.push(f);
+            this.grid.printFood(f);
+        })
+    }
+
     public fillBowl(max?: number) {
         const maxquantity = max && max >= 0 ? max : this.nfood;
         console.error(this.foodset.length);

@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { GameComponent } from './game/game.component';
 import { DrawingComponent } from './drawing/drawing.component';
 import { FormsModule } from '@angular/forms';
+import { NplayergameComponent } from './nplayergame/nplayergame.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
-    DrawingComponent
+    DrawingComponent,
+    NplayergameComponent
   ],
   imports: [
     BrowserModule,
