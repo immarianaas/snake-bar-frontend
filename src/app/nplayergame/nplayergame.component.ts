@@ -34,6 +34,8 @@ export class NplayergameComponent implements OnInit {
 
     this.gs.messages.subscribe(msg => {
       if (msg.tp === 'join') this.game.joinOnline(msg.data);
+      if (msg.tp === 'polling') this.game.answerPoll();
+      if (msg.tp === 'update') this.game.update(msg.data);
       console.log("resp from websocket: " + JSON.stringify(msg));
       // const mensg = msg.message;
       // this.msgs.push(<Message> {sender: mensg.sender, message: mensg.});

@@ -8,21 +8,46 @@ import { Grid } from "./grid";
 import { Position } from "./position";
 
 export class Snake {
-    private pos: Position[];
-    private colours: string[];
+    // [x: string]: any;
+    private pos!: Position[];
+    private colours!: string[];
 
 
-    private dir: Direction;
+    public dir!: Direction;
     private grid: Grid;
-    public len: number; // max len
+    public len!: number; // max len
 
-    private tempdir: Direction;
+    public tempdir!: Direction;
 
-    private digesting: Food[];
+    private digesting!: Food[];
 
     public foodeaten : number = 0;
 
-    public constructor(grid: Grid, startpos: Position, colour: string) {
+    public set_snake( sn : any) : void {
+        this.colours = sn.colours;
+        this.dir = sn.dir;
+        this.len = sn.len;
+        this.tempdir = sn.tempdir;
+        this.foodeaten = sn.foodeaten;
+        
+        this.pos = [];
+        console.log(sn.pos)
+        // falta: pos, grid, digesting
+        sn.pos.forEach((element: any) => {
+            this.pos.push(new Position(element['X'], element['Y']));
+        });
+
+        this.digesting = []
+        sn.digesting.forEach( (elem: { pos: number[]; colour: string; points: number; }) => {
+            this.digesting.push(new Food(new Position(elem.pos[0], elem.pos[1]), elem.colour, elem.points));
+        });
+    }
+
+    public constructor(grid: Grid, startpos?: Position, colour?: string) {
+        this.grid = grid;
+
+        if (!startpos || !colour) return;
+    
         this.pos = [startpos];
         this.colours = [colour];
 
@@ -34,7 +59,6 @@ export class Snake {
          */
         this.len = 5;
 
-        this.grid = grid;
         this.grid.fillSquare(startpos, colour);
 
         this.digesting = [];
@@ -69,6 +93,7 @@ export class Snake {
         this.dir = this.tempdir;
         if (this.dir == Direction.NONE) return null;
 
+        //console.log('hey3 : ', this)
         
         const currpos = this.pos[0];
         let newpos = this.getNewPos(currpos);
@@ -186,4 +211,6 @@ export class Snake {
         
         return ans;
     }
+
+
 }
